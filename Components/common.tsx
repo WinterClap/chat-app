@@ -2,7 +2,7 @@ import { Inter_100Thin } from "@expo-google-fonts/inter";
 import React from "react";
 import { ButtonProps, TouchableOpacityProps } from "react-native";
 import { ColorValue, View, FlexAlignType, Text, StyleSheet, TouchableOpacity, TextProps } from "react-native";
-
+import styled from "styled-components/native";
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 interface CenteredViewProps {
@@ -217,3 +217,24 @@ interface StyledTouchableOpacity extends TouchableOpacityProps {}
 export const StyledTouchableOpacity: React.FC<StyledTouchableOpacity> = ({ children, ...rest }) => {
   return <TouchableOpacity {...rest}>{children}</TouchableOpacity>;
 };
+
+interface FlexboxInterface {
+  m?: number | string;
+  p?: number | string;
+  justifyContent?: string;
+  alignContent?: string;
+}
+
+export const FlexRow = styled.View<FlexboxInterface>`
+  flex-direction: row;
+  align-items: ${(props) => props.alignContent || "center"};
+  justify-content: ${(props) => props.justifyContent || "center"};
+  margin: ${(props) => props.m || "0"};
+  padding: ${(props) => props.p || "0px"};
+`;
+export const FlexCol = styled.View<FlexboxInterface>`
+  align-items: ${(props) => props.alignContent || "center"};
+  margin: ${(props) => props.m || "0"};
+  justify-content: ${(props) => props.justifyContent || "center"};
+  padding: ${(props) => props.p || "0"};
+`;

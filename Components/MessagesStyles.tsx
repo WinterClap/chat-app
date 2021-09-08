@@ -8,45 +8,37 @@ export const Container = styled.View`
 
 export const ChatContainer = styled.View`
   padding: 0 5px;
+  border-radius: 20px;
 `;
 
 export const ChatTouchableOpacity = styled.TouchableOpacity`
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
-  border-color: black;
-  border-width: 1px;
-  padding: 10px 10px;
+  padding: 5px 10px;
 `;
-export const ImgWrapper = styled.View`
-  border-color: black;
+export const ImgWrapper = styled.TouchableOpacity`
   padding: 0 5px;
-  border-width: 1px;
   justify-content: center;
 `;
 export const UserImage = styled.Image`
   border-radius: 100px;
   height: 65px;
-  border-color: black;
-  border-width: 1px;
   width: 65px;
 `;
 
 export const ChatContent = styled.View`
   justify-content: space-between;
   width: 300px;
-  border-color: black;
-  border-width: 1px;
   height: 100px;
-
+  border-bottom-width: 1px;
+  border-color: #727272;
   padding: 10px 0;
 `;
 
 export const ChatHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  border-color: black;
-  border-width: 1px;
   width: 100%;
 `;
 
