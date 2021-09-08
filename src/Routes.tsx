@@ -1,7 +1,11 @@
 import React from "react";
-import { Animated, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer, RouteProp } from "@react-navigation/native";
+import {
+  getFocusedRouteNameFromRoute,
+  NavigationContainer,
+  NavigationState,
+  RouteProp,
+} from "@react-navigation/native";
 import { Login } from "./Views/Auth/Login";
 import { Register } from "./Views/Auth/Register";
 import { AuthParamList } from "./Views/Auth/AuthParamList";
@@ -12,7 +16,9 @@ import { Home } from "./Views/HomeTabs/Home";
 import { Account } from "./Views/HomeTabs/Account";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { ChatTabStack } from "./Views/HomeTabs/ChatTabStack/ChatTabStack";
-import { Icon } from "@expo/vector-icons/build/createIconSet";
+import { HeaderButton, HeaderText } from "../Components/HeaderButton";
+import { FlexRow } from "../Components/common";
+import { TouchableOpacity } from "react-native";
 
 interface Props {}
 
@@ -20,15 +26,15 @@ const Stack = createStackNavigator<AuthParamList>();
 const Tabs = createBottomTabNavigator<HomeTabsParamsList>();
 
 const isTabNavVisible = (route: any) => {
-  let routeName = route.state ? route.state.routes[route.state.index].name : "";
+  let routeName = getFocusedRouteNameFromRoute(route);
   console.log(routeName);
-  if (routeName === "Chat") {
+  if (routeName === "CurrentChat") {
     return false;
   }
   return true;
 };
 export const Routes = (props: Props) => {
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
 
   return (
     <>
@@ -56,7 +62,19 @@ export const Routes = (props: Props) => {
               tabBarInactiveTintColor: "gray",
             })}
           >
-            <Tabs.Screen name="HomeTab" component={Home} options={() => ({ title: "Home" })} />
+            <Tabs.Screen
+              name="HomeTab"
+              component={Home}
+              options={() => ({
+                title: "Home",
+                headerShown: true,
+                headerRight: () => (
+                  <TouchableOpacity>
+                    <Ionicons name="add" size={45} color="#7F00FD" />
+                  </TouchableOpacity>
+                ),
+              })}
+            />
             <Tabs.Screen
               name="ChatTab"
               component={ChatTabStack}
@@ -65,7 +83,24 @@ export const Routes = (props: Props) => {
                 tabBarStyle: { display: isTabNavVisible(route) ? "flex" : "none" },
               })}
             />
-            <Tabs.Screen name="AccountTab" component={Account} options={() => ({ title: "Account" })} />
+            <Tabs.Screen
+              name="AccountTab"
+              component={Account}
+              options={() => ({
+                title: "Account",
+                headerTitle: () => (
+                  <TouchableOpacity onPress={() => logout()}>
+                    <FlexRow>
+                      <HeaderText color="red" fontSize={16} label="Log out" />
+                      <Ionicons name="log-out-outline" size={24} color="red" />
+                    </FlexRow>
+                  </TouchableOpacity>
+                ),
+                headerTitleAlign: "left",
+                headerShown: true,
+                headerRight: () => <HeaderButton color="#7f00fd" fontSize={16} label="Edit profile" />,
+              })}
+            />
           </Tabs.Navigator>
         ) : (
           <Stack.Navigator screenOptions={{ header: () => null }}>

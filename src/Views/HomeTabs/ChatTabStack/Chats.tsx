@@ -66,7 +66,6 @@ export const Chats = ({ navigation }: { navigation: StackNavigationProp<ChatTabS
   const onChatPress = (username: string) => {
     navigation.navigate("CurrentChat", { username });
   };
-  console.log(chats);
   return (
     <Container>
       <FlatList
@@ -84,7 +83,7 @@ export const Chats = ({ navigation }: { navigation: StackNavigationProp<ChatTabS
                   <Timestamp>{chat.item.messageTime.toLocaleTimeString()}</Timestamp>
                 </ChatHeader>
                 <MessageTextWrapper>
-                  <MessageText>{chat.item.messageText}</MessageText>
+                  <MessageText numberOfLines={2}>{chat.item.messageText}</MessageText>
                 </MessageTextWrapper>
               </ChatContent>
             </ChatTouchableOpacity>
